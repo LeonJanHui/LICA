@@ -1,0 +1,46 @@
+# /home/dldx/Boltz-EGNN-Affinity/configs/train_config.yaml
+# ligand covalent + protein covalent + protein spatial + ligand-protein interface.
+# Fixed schema dimensions are imported from features.py.
+paths:
+  root_dir: /home/dldx/Boltz-EGNN-Affinity/data/curated_pdbbind
+  save_dir: /home/dldx/Boltz-EGNN-Affinity/data/processed/pyg_graphs
+  ledger_json: /home/dldx/Boltz-EGNN-Affinity/data/similarity/PDBbind_split_leakage_removed_c11_purified.json
+  data_dict_json: /home/dldx/Boltz-EGNN-Affinity/data/similarity/PDBbind_data_dict.json
+  save_model_dir: /home/dldx/Boltz-EGNN-Affinity/checkpoints/KFold
+dataset:
+  train_split: train
+  test_split: casf2016_indep
+  label_col: log_kd_ki
+  interface_cutoff: 6
+  include_hydrogens: false
+  water_policy: remove
+  water_cutoff: 4.0
+  strict_labels: true
+  protein_spatial_cutoff: 6
+model:
+  hidden_dim: 256
+  num_layers: 4
+  rbf_dim: 16
+  dropout_rate: 0.15
+  max_coord_step: 0.05
+training:
+  num_folds: 5
+  epochs: 150
+  patience: 15
+  batch_size: 32
+  learning_rate: 0.0002
+  min_learning_rate: 1.0e-06
+  weight_decay: 0.001
+  warmup_epochs: 5
+  gradient_clip_norm: 1.0
+  seed: 42
+  num_workers: 4
+  pin_memory: true
+  persistent_workers: true
+  resume_existing: true
+  deterministic: false
+ablation:
+  coord_update: true
+  use_track_a: true
+  use_track_b: true
+  use_track_c: true
