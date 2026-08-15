@@ -1,5 +1,5 @@
 # LICA
-Source code for "A Multi-View Relation-Aware Equivariant Graph Neural Network" 
+Source code for "Multi-View Relation-Aware Equivariant Graph Neural Network for protein-ligand binding affinity prediction" 
 
 ## 1. Environment
 conda env create -f environment.yaml
