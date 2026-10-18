@@ -1,0 +1,1 @@
+No Track C interface pairs. Atom B-factors from Track A (ligand) + Track B (pocket).

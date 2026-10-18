@@ -1,0 +1,6 @@
+protocol,protocol_label,split_file,n_ids_in_split,n_with_label,n_missing_label,mean,std,min,q25,median,q75,max
+random_train,Random train,random_purified.json,17965,17965,0,6.3763963261898144,1.8225725598213403,0.4,5.09,6.43,7.68,15.22
+tanimoto_train,Tanimoto train,PDBbind_split_leakage_removed_c11_purified.json,12668,12668,0,6.446813230186297,1.7687626721057503,0.4,5.2,6.54,7.72,15.0
+mydata_train,Mydata train,PDBbind_split_mydata.json,11385,11385,0,6.435631971892842,1.7693376987736604,0.4,5.2,6.52,7.7,15.0
+mydata_valid,Mydata valid,PDBbind_split_mydata.json,1263,1263,0,6.548012668250197,1.7610709156775632,1.35,5.245,6.63,7.82,11.52
+casf2016,CASF-2016,PDBbind_split_mydata.json,285,285,0,6.486140350877193,2.1743373236767285,2.07,4.92,6.5,8.04,11.82

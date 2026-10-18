@@ -1,0 +1,13 @@
+cases:
+- pdbid: 4j3l
+  role: lowest_error
+  criterion: "Smallest Full-model abs error on CASF-2016 (abs_err\u22480.008). Also\
+    \ carries \u03C0\u2013\u03C0 contacts (n_pi_pi=2), serving as an accurate exemplar."
+- pdbid: 2qbr
+  role: interaction_type_Hbond_saltbridge
+  criterion: "Low abs error (\u22480.041) with a chemically typical polar interface:\
+    \ n_hbonds=7 and n_salt_bridges=2. Chosen to illustrate H-bond/salt-bridge recognition."
+- pdbid: 4tmn
+  role: outlier_high_error
+  criterion: "High-error outlier (abs_err\u22483.40) with a flexible, H-bond-rich\
+    \ ligand. Included to expose model limitations on attention maps."

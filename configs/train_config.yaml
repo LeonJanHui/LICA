@@ -1,0 +1,44 @@
+paths:
+  root_dir: /home/dldx/Boltz-EGNN-Affinity/data/curated_pdbbind
+  save_dir: /home/dldx/Boltz-EGNN-Affinity/data/processed/pyg_graphs
+  ledger_json: /home/dldx/Boltz-EGNN-Affinity/data/similarity/PDBbind_split_mydata.json
+  data_dict_json: /home/dldx/Boltz-EGNN-Affinity/data/similarity/PDBbind_data_dict.json
+  save_model_dir: /home/dldx/Boltz-EGNN-Affinity/checkpoints/mydata_repeats
+dataset:
+  train_split: train
+  valid_split: valid
+  test_split: casf2016
+  label_col: log_kd_ki
+  interface_cutoff: 4.5
+  include_hydrogens: false
+  water_policy: remove
+  water_cutoff: 4.0
+  strict_labels: true
+  protein_spatial_cutoff: 5
+model:
+  hidden_dim: 256
+  num_layers: 4
+  rbf_dim: 16
+  dropout_rate: 0.20
+  max_coord_step: 0.05
+training:
+  num_repeats: 3
+  epochs: 800
+  patience: 100
+  batch_size: 32
+  learning_rate: 5.0e-4
+  min_learning_rate: 1.0e-06
+  weight_decay: 0.005
+  warmup_epochs: 5
+  gradient_clip_norm: 1.0
+  seed: 42
+  num_workers: 4
+  pin_memory: true
+  persistent_workers: true
+  resume_existing: false
+  deterministic: false
+ablation:
+  coord_update: true
+  use_track_a: true
+  use_track_b: true
+  use_track_c: true

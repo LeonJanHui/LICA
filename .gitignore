@@ -1,0 +1,34 @@
+# Local data, weights, and third-party baseline dumps are not part of the source repo.
+data/
+checkpoints/
+baselines/
+
+# Generated environments and caches
+__pycache__/
+*.py[cod]
+.venv/
+.venv-*/
+*-env/
+.ipynb_checkpoints/
+
+# Logs
+*.log
+_train.log
+_eval_probe.log
+_pyg.log
+_dgl_api_probe.log
+
+# PLIP scratch and large binary artifacts
+**/_plip/
+**/_plip_*/
+*.pdb
+results/T-split/_tmp_*
+*.pt
+*.pth
+*.npy
+*.pkl
+*.bin
+
+# Editor
+.vscode/
+.cursor/
