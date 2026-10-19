@@ -1,4 +1,4 @@
-# Boltz-EGNN-Affinity
+# LICA-Affinity
 
 Relation-aware equivariant graph network for protein–ligand binding affinity (pK) on PDBbind, evaluated on CASF-2016.
 
