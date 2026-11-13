@@ -15,6 +15,8 @@ This environment is Python 3.10, PyTorch 2.4.0+cu124, and PyTorch Geometric 2.7.
 
 ## Data
 
+Training data come from PDBbind version 2020 (the refined set and the general set). The database is [PDBbind+](https://www.pdbbind-plus.org.cn/), and version 2020 is available on its [download page](https://www.pdbbind-plus.org.cn/download).
+
 Run the three scripts below from `src/preprocess`, in this order. `curate_pdbbind.py` finds `data/` relative to that directory.
 
 ```bash
