@@ -1,42 +1,48 @@
-# LICA-Affinity
+# LICA
 
-Relation-aware equivariant graph network for protein–ligand binding affinity (pK) on PDBbind, evaluated on CASF-2016.
+LICA predicts protein–ligand binding affinity (pK) from a complex graph. The test split is CASF-2016.
 
-The model builds a complex graph and passes messages with a relation-aware EGNN. Three readouts are fused for the final prediction:
-
-- **Track A** pools the ligand.
-- **Track B** pools the pocket, conditioned on the ligand.
-- **Track C** attends over ligand–pocket atom pairs inside 4.5 Å.
-
-## Layout
-
-| Path | Role |
-|---|---|
-| `src/train.py` | Training and evaluation |
-| `src/model/` | EGNN layers and the three-track network |
-| `src/dataset.py` | Complex graph construction |
-| `src/preprocess/` | PDBbind curation, ECFP6 Tanimoto matrix, connected-component split |
-| `configs/ablation/` | Full model and Track A/B/C ablations, including parameter-matched controls |
-| `configs/train_config.yaml` | Random-split training config |
-| `scripts/` | Ablation table, error analysis, and Track C interpretability |
-| `docs/ABLATION_PROTOCOL.md` | What “remove a track” means |
-
-`data/`, `checkpoints/`, and `baselines/` stay on disk for local runs and are not part of this source repository.
-
-## Data protocol
-
-Curated complexes are filtered in `src/preprocess/curate_pdbbind.py` (resolution ≤ 3.0 Å, ligand heavy atoms ≥ 5, molecular weight ≥ 100 Da). The main results use the Tanimoto split in `data/similarity/PDBbind_split_mydata.json`: ligands are connected when ECFP6 Tanimoto similarity is at least 0.75, and any connected component that touches CASF-2016 is removed from development. A random split of the same curated pool is available for comparison.
-
-## Train
-
-From the repository root, with the project environment active:
-
-```bash
-python src/train.py --config configs/ablation/00_full.yaml
-```
-
-Ablation configs live in `configs/ablation/`. The reported protocol uses AdamW, learning rate `5e-4`, batch size 32, 4 EGNN layers, hidden size 256, and 3 seeds (`42`, `43`, `44`). Ablation runs stop after 30 epochs without a validation-RMSE improvement (`patience: 30`).
+![LICA architecture](framework.png)
 
 ## Environment
 
-Training used PyTorch 2.4.0+cu124 and PyTorch Geometric 2.7.0. See `requirements.txt`. A full conda export is in `src/environment.yaml` (environment name `lica-egnn`).
+```bash
+conda env create -f environment.yaml
+conda activate lica-egnn
+```
+
+This environment is Python 3.10, PyTorch 2.4.0+cu124, and PyTorch Geometric 2.7.0. PDBbind structures and checkpoints are not included. Place PDBbind v2020 under `data/raw/PDBbind_v2020/` with `refined-set/`, `general-set/`, and `index/`.
+
+## Data
+
+Run the three scripts below from `src/preprocess`, in this order. `curate_pdbbind.py` finds `data/` relative to that directory.
+
+```bash
+cd src/preprocess
+python curate_pdbbind.py
+python compute_pairwise_tanimoto.py \
+  --root_dir ../../data/curated_pdbbind \
+  --index_file ../../data/curated_pdbbind/curated_indices.csv \
+  --save_dir ../../data/similarity/pairwise_similarity_matrix
+python cluster_based_split.py
+```
+
+`curate_pdbbind.py` removes affinities written with `<`, `>`, or `~`, then keeps complexes with resolution at most 3.0 Å, an RDKit-readable ligand, at least 5 heavy atoms, and molecular weight at least 100 Da.
+
+`compute_pairwise_tanimoto.py` writes the ECFP6 Tanimoto matrix.
+
+`cluster_based_split.py` links ligands with Tanimoto similarity of at least 0.75 and holds out every cluster that contains a CASF-2016 complex. Set `SIM_DIR` at the top of that file to your `data/similarity` directory before running it. Point `paths` in `configs/train_config.yaml` at the curated structures, the affinity dictionary, and the split JSON you will train on.
+
+## Training
+
+From the repository root:
+
+```bash
+python src/train.py --config configs/train_config.yaml
+```
+
+Training builds the graphs, runs three seeds, and writes test metrics under the checkpoint directory in the config. Ablation configs in `configs/ablation/` use the same command. Score saved checkpoints with:
+
+```bash
+python src/evaluate.py --config configs/train_config.yaml
+```

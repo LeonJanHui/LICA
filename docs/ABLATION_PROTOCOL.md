@@ -45,10 +45,15 @@ Configs live in `configs/ablation/`:
 ## Run
 
 ```bash
-# Full model already trained at checkpoints/mydata_repeats — skip 00_full:
-python scripts/run_ablation_suite.py --only 01_wo_track_a,02_wo_track_b,03_wo_track_c,04_wo_track_a_param_match,05_wo_track_b_param_match,06_wo_track_c_param_match
-python scripts/make_ablation_table.py
+python src/train.py --config configs/ablation/01_wo_track_a.yaml
+python src/train.py --config configs/ablation/02_wo_track_b.yaml
+python src/train.py --config configs/ablation/03_wo_track_c.yaml
+python src/train.py --config configs/ablation/04_wo_track_a_param_match.yaml
+python src/train.py --config configs/ablation/05_wo_track_b_param_match.yaml
+python src/train.py --config configs/ablation/06_wo_track_c_param_match.yaml
 ```
+
+`00_full.yaml` matches the main training run. Each config writes its own metrics under the `save_model_dir` in that file.
 
 ## Reporting
 

@@ -29,6 +29,12 @@ results/T-split/_tmp_*
 *.pkl
 *.bin
 
+# Local analyses and case-study figure scripts. The method is src/ plus configs/.
+scripts/
+src/test.py
+src/evaluate_random.py
+src/interpretability/
+
 # Editor
 .vscode/
 .cursor/
