@@ -31,7 +31,7 @@ python cluster_based_split.py
 
 `curate_pdbbind.py` removes affinities written with `<`, `>`, or `~`, then keeps complexes with resolution at most 3.0 Å, an RDKit-readable ligand, at least 5 heavy atoms, and molecular weight at least 100 Da.
 
-`compute_pairwise_tanimoto.py` writes the ECFP6 Tanimoto matrix.
+`compute_pairwise_tanimoto.py` writes the ECFP6 Tanimoto matrix. That matrix is already in `data/similarity/pairwise_similarity_matrix/`. The `.npy` file is stored with Git LFS, so run `git lfs pull` after cloning.
 
 `cluster_based_split.py` links ligands with Tanimoto similarity of at least 0.75 and holds out every cluster that contains a CASF-2016 complex. Set `SIM_DIR` at the top of that file to your `data/similarity` directory before running it. Point `paths` in `configs/train_config.yaml` at the curated structures, the affinity dictionary, and the split JSON you will train on.
 
