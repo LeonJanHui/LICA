@@ -1,7 +1,9 @@
-# Local data, weights, and third-party baseline dumps are not part of the source repo.
+# Local data, weights, results, and third-party baseline dumps are not part of the source repo.
 data/
 checkpoints/
 baselines/
+results/*
+!results/.gitkeep
 
 # Generated environments and caches
 __pycache__/
@@ -22,7 +24,6 @@ _dgl_api_probe.log
 **/_plip/
 **/_plip_*/
 *.pdb
-results/T-split/_tmp_*
 *.pt
 *.pth
 *.npy
