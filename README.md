@@ -11,7 +11,7 @@ conda env create -f environment.yaml
 conda activate lica-egnn
 ```
 
-This environment is Python 3.10, PyTorch 2.4.0+cu124, and PyTorch Geometric 2.7.0. PDBbind structures and checkpoints are not included. Place PDBbind v2020 under `data/raw/PDBbind_v2020/` with `refined-set/`, `general-set/`, and `index/`.
+This environment is Python 3.10, PyTorch 2.4.0+cu124, and PyTorch Geometric 2.7.0. PDBbind structures are not included. Place PDBbind v2020 under `data/raw/PDBbind_v2020/` with `refined-set/`, `general-set/`, and `index/`. Trained weights are in the [checkpoints release](https://github.com/LeonJanHui/LICA/releases/tag/checkpoints).
 
 ## Data
 
@@ -43,7 +43,7 @@ From the repository root:
 python src/train.py --config configs/train_config.yaml
 ```
 
-Training builds the graphs, runs three seeds, and writes test metrics under the checkpoint directory in the config. Ablation configs in `configs/ablation/` use the same command. Score saved checkpoints with:
+Training builds the graphs, runs three seeds, and writes test metrics under the checkpoint directory in the config. Ablation configs in `configs/ablation/` use the same command. The trained `best.pt` files for the full model, the random-split model, and the track ablations are packed in [lica-checkpoints.tar.gz](https://github.com/LeonJanHui/LICA/releases/download/checkpoints/lica-checkpoints.tar.gz). Score saved checkpoints with:
 
 ```bash
 python src/evaluate.py --config configs/train_config.yaml
